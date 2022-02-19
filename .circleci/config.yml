@@ -37,8 +37,11 @@ jobs:
           command: |
             python manage.py test
             echo $DOCKERHUB_PASSWORD
-            pip install pywebcopy
-            python temp.py
+            pip install pytest
+            pytest --junitxml=test-results/junit.xml
+
+          # pip install pywebcopy
+          # python temp.py
       # - run:
       #     command: |
       #       make docker-build
