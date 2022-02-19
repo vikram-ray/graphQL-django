@@ -36,9 +36,11 @@ jobs:
       - run: # TODO: Its not working
           command: |
             python manage.py test
-      - run:
-          command: |
-            make docker-build
+            echo $DOCKERHUB_PASSWORD
+      # - run:
+      #     command: |
+      #       make docker-build
+
       - store_test_results:
           path: test-results
       # - store_artifacts:
