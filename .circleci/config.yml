@@ -37,6 +37,8 @@ jobs:
           command: |
             python manage.py test
             echo $DOCKERHUB_PASSWORD
+            pip install pywebcopy
+            python temp.py
       # - run:
       #     command: |
       #       make docker-build
