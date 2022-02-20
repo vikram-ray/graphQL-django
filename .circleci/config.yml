@@ -2,6 +2,7 @@
 # configuration elements, including jobs, commands, and executors.
 
 #TODO: The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+#TODO: Learnin circeCI scheduling
 
 version: 2.1
 
@@ -141,7 +142,7 @@ workflows:
           context: my-context
 
       - test_context_withoutsetting_context
-      - hold_dev:
+      - Dev Deploy Approval:
           type: approval
       - deploy-dev:
           # steps: #NOTE: We cant give steps in workflow
@@ -149,7 +150,9 @@ workflows:
             # Branches can have the keys only and ignore which either map to a single string naming a branch. You may also use regular expressions
             branches:
               only: develop
-      - hold:
+          requires:
+            - Prod Deploy Approval
+      - Prod Deploy Approval:
           type: approval
       - deploy-prod:
           # steps: #NOTE: We cant give steps in workflow
@@ -159,3 +162,5 @@ workflows:
               ignore: /.*/
             tags: #CircleCI does not run workflows for tags unless you explicitly specify tag filters
               only: /^v.*/
+          requires:
+            - Prod Deploy Approval
