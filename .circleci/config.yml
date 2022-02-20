@@ -1,5 +1,14 @@
 version: 2.1
 
+commands: # a reusable command with parameters
+  greeting:
+    parameters:
+      to:
+        default: "world"
+        type: string
+    steps:
+      - run: echo "Hello <<parameters.to>>!"
+
 # Executors define the environment in which the steps of a job will be run,
 # allowing you to reuse a single executor definition across multiple jobs.
 executors:
@@ -20,7 +29,7 @@ executors:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
 
-jobs:
+jobs: # A job needs atleast 2 things. A executer and steps
   build:
     executor: python3
     working_directory: ~/project
@@ -59,6 +68,13 @@ jobs:
             pip install pytest
             pytest --junitxml=test-results/junit.xml
 
+  greet:
+    executor: python3
+    steps:
+      - greeting:
+          to: "Vikram!"
+      - greeting # Here it will print Hello world!
+
   print_runtime_env:
     working_directory: ~/project
     executor: python3
@@ -79,3 +95,4 @@ workflows:
             - "test"
       - test
       - print_runtime_env
+      - greet
