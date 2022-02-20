@@ -1,5 +1,7 @@
 version: 2.1
 
+# Executors define the environment in which the steps of a job will be run,
+# allowing you to reuse a single executor definition across multiple jobs.
 executors:
   python3:
     docker:
@@ -37,14 +39,6 @@ jobs:
             - ".venv"
             - "/usr/local/bin"
             - "/usr/local/lib/python3.6/site-packages"
-      - run: # TODO: Its not working
-          command: |
-            python manage.py test
-            echo $DOCKERHUB_PASSWORD
-            pip install pytest
-            pytest --junitxml=test-results/junit.xml
-
-          # pip install pywebcopy
           # python temp.py
       # - run:
       #     command: |
@@ -62,22 +56,23 @@ jobs:
     steps:
       - run:
           command: |
-            echo "Vikram"
+            pip install pytest
+            pytest --junitxml=test-results/junit.xml
 
-  job2:
+  print_runtime_env:
     working_directory: ~/project
     executor: python3
     steps:
       - run:
           command: |
-            echo "JOB 2"
+            echo "USER NAME: "
+            echo $USER
+            echo $CUSTOM_ENV
 
 workflows:
   build_workflow:
     jobs:
-      # - build
-      - test:
+      - build:
           requires:
-            - "job2"
-      - job2
-      - build
+            - test
+      - print_runtime_env
