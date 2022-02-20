@@ -154,6 +154,11 @@ workflows:
             - Prod Deploy Approval
       - Prod Deploy Approval:
           type: approval
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
       - deploy-prod:
           # steps: #NOTE: We cant give steps in workflow
           filters: #USED TO run jobs conditionally
