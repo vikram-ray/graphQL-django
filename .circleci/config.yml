@@ -151,7 +151,7 @@ workflows:
             branches:
               only: main
           requires:
-            - Prod Deploy Approval
+            - Dev Deploy Approval
       - Prod Deploy Approval:
           type: approval
           filters:
