@@ -76,6 +76,20 @@ jobs: # A job needs atleast 2 things. A executer and steps
           to: "Vikram!"
       - greeting # Here it will print Hello world!
 
+  test_context_withoutsetting_context:
+    executor: python3
+    steps:
+      - run:
+          command: |
+            echo $ECR_NAME
+  test_context_setting_context:
+    executor: python3
+    steps:
+      - run:
+          command: |
+            echo $ECR_NAME
+    context: my-context
+
   print_runtime_env:
     working_directory: ~/project
     executor: python3
@@ -97,3 +111,5 @@ workflows:
       - test
       - print_runtime_env
       - greet
+      - test_context_setting_context
+      - test_context_withoutsetting_context
