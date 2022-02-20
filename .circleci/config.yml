@@ -52,7 +52,17 @@ jobs:
       #     path: test-results
       #     destination: tr1
 
+  test:
+    working_directory: ~/project
+    docker:
+      - image: cimg/python:3.8.6 # primary container for the build job
+    steps:
+      - run:
+          command: |
+            echo "Vikram"
+
 workflows:
   build_workflow:
     jobs:
-      - build
+      # - build
+      - test
