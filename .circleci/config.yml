@@ -78,4 +78,4 @@ workflows:
       - test
       - print_runtime_env:
           environment:
-            - CUSTOM_ENV: "My Values"
+            CUSTOM_ENV: "My Values"
