@@ -74,5 +74,6 @@ workflows:
     jobs:
       - build:
           requires:
-            - test
+            - "test"
+      - test
       - print_runtime_env
