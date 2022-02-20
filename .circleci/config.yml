@@ -1,3 +1,6 @@
+# CircleCI orbs are open-source, shareable packages of parameterizable reusable
+# configuration elements, including jobs, commands, and executors.
+
 version: 2.1
 
 commands: # a reusable command with parameters
@@ -8,6 +11,16 @@ commands: # a reusable command with parameters
         type: string
     steps:
       - run: echo "Hello <<parameters.to>>!"
+
+  deploy-to-target:
+    parameters:
+      target:
+        default: "dev"
+        type: string
+    steps:
+      - run:
+          command: |
+            echo "Deploying code to <<parameters.target>>!"
 
 # Executors define the environment in which the steps of a job will be run,
 # allowing you to reuse a single executor definition across multiple jobs.
@@ -101,6 +114,13 @@ jobs: # A job needs atleast 2 things. A executer and steps
           environment:
             CUSTOM_ENV: "My Values"
 
+  deploy:
+    executor: python3
+    steps:
+      - run: echo "RUNNING THE DEPLOY STEPS!"
+      - deploy-to-target:
+          target: "Dev Instance"
+
 workflows:
   build_workflow:
     jobs:
@@ -114,3 +134,12 @@ workflows:
           context: my-context
 
       - test_context_withoutsetting_context
+
+      - deploy:
+          steps:
+            - deploy-to-target:
+              target: "Dev Instance"
+          filters: #USED TO run jobs conditionally
+            # Branches can have the keys only and ignore which either map to a single string naming a branch. You may also use regular expressions
+            branches:
+              only: main
