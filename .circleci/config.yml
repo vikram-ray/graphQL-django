@@ -114,12 +114,17 @@ jobs: # A job needs atleast 2 things. A executer and steps
           environment:
             CUSTOM_ENV: "My Values"
 
-  deploy:
+  deploy-dev:
     executor: python3
     steps:
-      - run: echo "RUNNING THE DEPLOY STEPS!"
       - deploy-to-target:
           target: "Dev Instance"
+
+  deploy-prod:
+    executor: python3
+    steps:
+      - deploy-to-target:
+          target: "PROD Instance"
 
 workflows:
   build_workflow:
@@ -135,7 +140,13 @@ workflows:
 
       - test_context_withoutsetting_context
 
-      - deploy:
+      - deploy-dev:
+          # steps: #NOTE: We cant give steps in workflow
+          filters: #USED TO run jobs conditionally
+            # Branches can have the keys only and ignore which either map to a single string naming a branch. You may also use regular expressions
+            branches:
+              only: develop
+      - deploy-prod:
           # steps: #NOTE: We cant give steps in workflow
           filters: #USED TO run jobs conditionally
             # Branches can have the keys only and ignore which either map to a single string naming a branch. You may also use regular expressions
