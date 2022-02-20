@@ -1,6 +1,8 @@
 # CircleCI orbs are open-source, shareable packages of parameterizable reusable
 # configuration elements, including jobs, commands, and executors.
 
+#TODO: The matrix stanza allows you to run a parameterized job multiple times with different arguments.
+
 version: 2.1
 
 commands: # a reusable command with parameters
@@ -139,13 +141,16 @@ workflows:
           context: my-context
 
       - test_context_withoutsetting_context
-
+      - hold_dev:
+          type: approval
       - deploy-dev:
           # steps: #NOTE: We cant give steps in workflow
           filters: #USED TO run jobs conditionally
             # Branches can have the keys only and ignore which either map to a single string naming a branch. You may also use regular expressions
             branches:
               only: develop
+      - hold:
+          type: approval
       - deploy-prod:
           # steps: #NOTE: We cant give steps in workflow
           filters: #USED TO run jobs conditionally
