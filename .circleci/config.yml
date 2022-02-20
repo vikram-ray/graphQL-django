@@ -88,7 +88,6 @@ jobs: # A job needs atleast 2 things. A executer and steps
       - run:
           command: |
             echo $ECR_NAME
-    context: my-context
 
   print_runtime_env:
     working_directory: ~/project
@@ -111,5 +110,7 @@ workflows:
       - test
       - print_runtime_env
       - greet
-      - test_context_setting_context
+      - test_context_setting_context: # context need to be set at runtime
+          context: my-context
+
       - test_context_withoutsetting_context
