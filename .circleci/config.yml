@@ -68,6 +68,8 @@ jobs:
             echo "USER NAME: "
             echo $USER
             echo $CUSTOM_ENV
+          environment:
+            CUSTOM_ENV: "My Values"
 
 workflows:
   build_workflow:
@@ -76,6 +78,4 @@ workflows:
           requires:
             - "test"
       - test
-      - print_runtime_env:
-          environment:
-            CUSTOM_ENV: "My Values"
+      - print_runtime_env
