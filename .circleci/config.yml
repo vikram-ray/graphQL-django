@@ -63,6 +63,7 @@ jobs: # A job needs atleast 2 things. A executer and steps
     working_directory: ~/project
     executor: python3
     steps:
+      - checkout
       - run:
           command: |
             pip install pytest
