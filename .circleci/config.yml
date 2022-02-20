@@ -76,4 +76,6 @@ workflows:
           requires:
             - "test"
       - test
-      - print_runtime_env
+      - print_runtime_env:
+          environment:
+            - CUSTOM_ENV: "My Values"
