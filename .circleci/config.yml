@@ -150,7 +150,7 @@ workflows:
           # steps: #NOTE: We cant give steps in workflow
           filters: #USED TO run jobs conditionally
             # Branches can have the keys only and ignore which either map to a single string naming a branch. You may also use regular expressions
-            branches:
+            branches: # This will not run on any branch. To only run with tag configuration with (v.*)
               ignore: /.*/
             tags: #CircleCI does not run workflows for tags unless you explicitly specify tag filters
               only: /^v.*/
