@@ -149,7 +149,7 @@ workflows:
           filters: #USED TO run jobs conditionally
             # Branches can have the keys only and ignore which either map to a single string naming a branch. You may also use regular expressions
             branches:
-              only: develop
+              only: main
           requires:
             - Prod Deploy Approval
       - Prod Deploy Approval:
